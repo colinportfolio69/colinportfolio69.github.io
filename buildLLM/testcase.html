@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>TestCase</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+</head>
+<body>
+    <!-- wp:image {"id":143,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://cyberjourneyblog.com/wp-content/uploads/2023/03/timer.png" alt="" class="wp-image-143"/><figcaption class="wp-element-caption"><em><strong>Figure 1:</strong> The challenge description. </em></figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>The challenge involves decompiling an apk file. Its hints suggests to use either mobsf or jadx tool (figure 1). The skills involved here, namely decompiling APK to Java is new to me as up till this challenge, as C is the low level language I'm more familiar with.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>GeeksforGeeksexplains that in order to run a java code, it is first compiled into bytecode and class files similar to C, however it has the extra step involving a Java Virtual Machine to generate the machine code for execution of the program. This lends to Java's strength in portability across operating systems. <sup>[1]</sup></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>However, ARM based Android devices have limited battery life, memory and processing capacity compared to desktops. These requirements means special compilers and VMs need to be used for compilation and execution of Java in Android systems, namely DEX and Dalvik Virtual Machine or DVM. The file extension of the final executable is also .apk instead of .jar <sup>[2]</sup> </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>First, let's inspect the file. It is indeed an APK file for Android OS and its shown to be signed. (Figure 2)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":152,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://cyberjourneyblog.com/wp-content/uploads/2023/03/Selection_039.png" alt="" class="wp-image-152"/><figcaption class="wp-element-caption"><em><strong>Figure 2:</strong> Inspection of file type for timer.apk</em></figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>The official github repository for Mobile Security Framework, or Mobsf describes the tool as an all-in-one security suite but designed as a web app for use on Android, iOS or Windows systems <sup>[3]</sup>, making it unsuitable in this use-case involving Kali Linux as the Guest OS testing environment. Thus the next step would be to research the process of Java code compilation on Android then use jadx to obtain timer's source code.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">jadx</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The official Kali Linux describes jadx as a tool for reverse engineering .apk files or output of DEX compiler back to the human readable java source code. It comes in both CLI and GUI options. Jadx does not ship with Kali Linux by default and needs to be installed through the usual apt package manger <sup>[4]</sup> :</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code {"backgroundColor":"black","textColor":"white"} -->
+<pre class="wp-block-code has-white-color has-black-background-color has-text-color has-background"><code>sudo apt install jadx</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>From jadx CLI's help page the syntax of usage is:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code {"backgroundColor":"black","textColor":"white"} -->
+<pre class="wp-block-code has-white-color has-black-background-color has-text-color has-background"><code>jadx &#91;options] &lt;input files&gt;</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>From the help page the GUI option for jadx can be accessed with the command:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>jadx-gui</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>timer.apk was subsequently opened in the graphical interface and the flag is shown to be hidden as the version name of the timer app, in the BuildConfig class of the example.timer package. (Figure 3)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":155,"sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="https://cyberjourneyblog.com/wp-content/uploads/2023/03/Selection_037-1024x514.png" alt="" class="wp-image-155"/><figcaption class="wp-element-caption"><em><strong>Figure 3:</strong> The flag revealed in jadx 's graphical user interface.</em></figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">References</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>[1] “Compilation and Execution of a Java Program,” <em>GeeksforGeeks</em>, Apr. 16, 2018. https://www.geeksforgeeks.org/compilation-execution-java-program/</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>[2] “Difference Between JVM and DVM,” <em>GeeksforGeeks</em>, Dec. 27, 2020. https://www.geeksforgeeks.org/difference-between-jvm-and-dvm/</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>[3] “Mobile Security Framework (MobSF),” <em>Mobile Security Framework (MobSF)</em>. https://mobsf.github.io/Mobile-Security-Framework-MobSF/</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>[4] “jadx | Kali Linux Tools,” <em>Kali Linux</em>. https://www.kali.org/tools/jadx/.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+</body>
+</html>
